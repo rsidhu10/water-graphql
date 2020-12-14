@@ -3,7 +3,7 @@ import { gql } from "apollo-server-express";
 export default gql`
   extend type Query {
     infoPost: String
-    getAllPosts: [Post!]!
+    getAllPosts: [Post!]! @isAuth
     getPostById(id: ID!): Post!
   }
 

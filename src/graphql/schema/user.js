@@ -30,7 +30,7 @@ export default gql`
   }
 
   type AuthResp {
-    user: User
+    user: User!
     token: String!
   }
 `;

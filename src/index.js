@@ -6,7 +6,7 @@ import { ApolloServer } from "apollo-server-express";
 import { fileLoader, mergeTypes, mergeResolvers } from "merge-graphql-schemas";
 import path from "path";
 import AuthMiddleware from "./middlewares/auth";
-//import { schemaDirectives } from "./graphql/directives";
+import { schemaDirectives } from "./graphql/directives";
 
 const typeDefs = mergeTypes(
   fileLoader(path.join(__dirname, "./graphql/schema"))
@@ -15,11 +15,17 @@ const resolvers = mergeResolvers(
   fileLoader(path.join(__dirname, "./graphql/resolvers"))
 );
 //console.log(typeDefs);
+
 //console.log(resolvers);
+console.log(IN_PROD);
+const app = express();
+app.use(AuthMiddleware);
+console.log(`PORT No ${PORT}`);
+
 const server = new ApolloServer({
   typeDefs,
   resolvers,
-
+  schemaDirectives,
   playground: IN_PROD,
   context: ({ req }) => {
     let { isAuth, user } = req;
@@ -31,10 +37,6 @@ const server = new ApolloServer({
     };
   },
 });
-console.log(IN_PROD);
-const app = express();
-app.use(AuthMiddleware);
-console.log(`PORT No ${PORT}`);
 
 const startApp = async () => {
   try {
