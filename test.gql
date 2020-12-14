@@ -1,0 +1,103 @@
+query GET_ALL_POSTS {
+  getAllPosts {
+    id
+    title
+    content
+    featuredImage
+    createdAt
+    updatedAt
+  }
+}
+
+mutation CREATE_NEW_POST(
+  $title: String!
+  $content: String!
+  $featuredImage: String
+) {
+  createNewPost(
+    newPost: { title: $title, content: $content, featuredImage: $featuredImage }
+  ) {
+    title
+    content
+  }
+}
+
+mutation EDIT_POST_BY_ID(
+  $title: String!
+  $content: String!
+  $featuredImage: String
+) {
+  editPostById(
+    updatedPost: {
+      title: $title
+      content: $content
+      featuredImage: $featuredImage
+    }
+    id: 2
+  ) {
+    title
+    content
+    featuredImage
+  }
+}
+
+mutation EDIT_POST($title: String!, $content: String!, $featuredImage: String) {
+  editPostById(
+    updatedPost: {
+      title: $title
+      content: $content
+      featuredImage: $featuredImage
+    }
+    id: 1
+  ) {
+    title
+    content
+  }
+}
+mutation DELETE_POST_BY_ID($id: ID!) {
+  deleteById(id: $id) {
+    id
+    message
+    success
+  }
+}
+
+query GET_POST_BY_ID($id: ID!) {
+  getPostById(id: $id) {
+    title
+    content
+    id
+  }
+}
+
+mutation REGISTER_USER {
+  registerUser(
+    newUser: {
+      username: "rsidhu3"
+      email: "rsidhu13@gmail.com"
+      firstname: "Rupinder"
+      lastname: "Sidhu"
+      avtarImage: "Image"
+      password: "1234567"
+    }
+  ) {
+    token
+    user {
+      username
+      email
+    }
+  }
+}
+
+query AUTH_USER {
+  authenticateUser(username: "rsidhu", password: "1234567") {
+    user {
+      id
+      username
+      email
+      firstname
+      lastname
+    }
+    token
+  }
+}

@@ -1,28 +1,39 @@
 import express from "express";
-import { PORT, IN_PROD, PASSCODE } from "./config";
+import { PORT, IN_PROD, DB_PASSCODE, DB_USER, DB_DATABASE } from "./config";
 import { success, error } from "consola";
 import db from "./models";
 import { ApolloServer } from "apollo-server-express";
 import { fileLoader, mergeTypes, mergeResolvers } from "merge-graphql-schemas";
 import path from "path";
-console.log(PASSCODE);
+import AuthMiddleware from "./middlewares/auth";
+//import { schemaDirectives } from "./graphql/directives";
+
 const typeDefs = mergeTypes(
   fileLoader(path.join(__dirname, "./graphql/schema"))
 );
 const resolvers = mergeResolvers(
   fileLoader(path.join(__dirname, "./graphql/resolvers"))
 );
-console.log(typeDefs);
-console.log(resolvers);
+//console.log(typeDefs);
+//console.log(resolvers);
 const server = new ApolloServer({
   typeDefs,
   resolvers,
+
   playground: IN_PROD,
-  context: {},
+  context: ({ req }) => {
+    let { isAuth, user } = req;
+    return {
+      req,
+      isAuth,
+      user,
+      db,
+    };
+  },
 });
 console.log(IN_PROD);
 const app = express();
-
+app.use(AuthMiddleware);
 console.log(`PORT No ${PORT}`);
 
 const startApp = async () => {
