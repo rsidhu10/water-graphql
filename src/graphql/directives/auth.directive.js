@@ -7,6 +7,13 @@ export class IsAuthDirective extends SchemaDirectiveVisitor {
     field.resolve = async function (...args) {
       let test = args;
       console.log("Testing ....", test);
+      let [_, {}, { user, isAuth }] = args;
+      if (isAuth) {
+        const result = await resolve.apply(this, args);
+        return result;
+      } else {
+        throw new ApolloError("You must be authenticated user");
+      }
     };
   }
 }

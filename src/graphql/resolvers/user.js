@@ -7,6 +7,8 @@ export default {
     infoUser: () => {
       return "Hello from User";
     },
+    authUserProfile: async (_, {}, { user }) => user,
+
     authenticateUser: async (_, { username, password }, { db }) => {
       try {
         // Find the user from the database

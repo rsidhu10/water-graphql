@@ -30,14 +30,15 @@ const AuthMiddleware = async (req, res, next) => {
   let authUser = await User.findOne({
     where: { id: decodedToken.id },
   });
-  console.log("Auth User", authUser);
+  //console.log("Auth User", authUser);
   if (!authUser) {
     req.isAuth = false;
     return next();
   }
   req.user = authUser;
   req.isAuth = true;
-  console.log(authUser);
+  console.log("Is Auth: ", req.isAuth);
+  //console.log("Auth User", authUser);
   return next();
 };
 

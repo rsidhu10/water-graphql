@@ -4,6 +4,7 @@ export default gql`
   extend type Query {
     infoUser: String
     authUser: User!
+    authUserProfile: User! @isAuth
     authenticateUser(username: String!, password: String!): AuthResp!
   }
 

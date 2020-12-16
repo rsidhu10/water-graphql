@@ -6,6 +6,7 @@ export const issueToken = async (user) => {
   let token = sign(user, SECRET, {
     expiresIn: 60 * 60 * 24,
   });
+  console.log("Token Issue Time: ", new Date());
   return `Bearer ${token}`;
 };
 

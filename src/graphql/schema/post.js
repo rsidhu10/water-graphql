@@ -4,7 +4,7 @@ export default gql`
   extend type Query {
     infoPost: String
     getAllPosts: [Post!]! @isAuth
-    getPostById(id: ID!): Post!
+    getPostById(id: ID!): Post! @isAuth
   }
 
   type Mutation {
