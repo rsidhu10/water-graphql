@@ -47,14 +47,14 @@ export default {
         let user = await User.findOne({
           where: { username: username },
         });
-        console.log(`User Name : `, user);
+        //console.log(`User Name : `, user);
         if (user) {
           throw new ApolloError("Username is already taken.", "403");
         }
         user = await User.findOne({
           where: { email: email },
         });
-        console.log(`Email user : `, user);
+        //console.log(`Email user : `, user);
         if (user) {
           throw new ApolloError("Email is already Registered.", "403");
         }

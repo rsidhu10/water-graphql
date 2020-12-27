@@ -20,10 +20,17 @@ export default {
     },
     editPostById: async (_, { id, updatedPost }, { db }) => {
       console.log("ID: ", id, "Post : ", updatedPost);
-      let result = await db.Post.findByPk(id);
-      console.log(`Result : ${result}`);
-      result.update(...updatedPost);
-      return result;
+      let post = await db.Post.findByPk(id);
+      if (!post) {
+        throw Error(`Job not updated. id: ${id}`);
+      }
+      console.log(`Result : ${post}`);
+      post.title = updatedPost.title;
+      post.content = updatedPost.content;
+      post.save();
+      return post;
+
+      //return result;
     },
     deleteById: async (_, { id }, { db }) => {
       let deletedPost = await db.Post.destroy({

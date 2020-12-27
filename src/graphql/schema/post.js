@@ -9,7 +9,7 @@ export default gql`
 
   type Mutation {
     createNewPost(newPost: InputPost): Post!
-    editPostById(updatedPost: InputPost, id: ID!): Post!
+    editPostById(id: ID!, updatedPost: InputPost): Post!
     deleteById(id: ID!): PostNotification
   }
 
